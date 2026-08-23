@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASCII Logo | Codrops</title>
+    <meta
+      name="description"
+      content="The Codrops mark as a draggable 3D solid, printed in ASCII characters on the GPU with three.js."
+    />
+    <meta name="keywords" content="ascii, webgl, three.js, shaders, custom element, glyph atlas, codrops" />
+    <meta name="author" content="Codrops" />
+    <link rel="icon" type="image/svg+xml" href="https://tympanus.net/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://tympanus.net/favicon/favicon.ico" />
+
+    <!-- Regular only, which is the weight the atlas is baked at and the only one the page uses.
+         The print is rasterized from this face, so if it fails to arrive the mark is drawn in
+         whatever `ui-monospace` resolves to instead. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <!-- The demo frame: the links Codrops demos carry, plus the page's one control. It sits in the
+         margins the mark never reaches and prints in the same ink, so both themes style it for
+         free. -->
+    <header class="frame">
+      <h1 class="frame__title">ASCII Logo</h1>
+      <a class="frame__back" href="https://tympanus.net/codrops/?p=TODO">Article</a>
+      <a class="frame__archive" href="https://tympanus.net/codrops/hub/">All demos</a>
+      <a class="frame__github" href="https://github.com/edoardolunardi/ascii-logo">GitHub</a>
+      <div class="frame__credits">
+        <span>By </span>
+        <a href="https://www.edoardolunardi.dev/" target="_blank">Edoardo Lunardi</a>
+      </div>
+      <nav class="frame__tags">
+        <a href="https://tympanus.net/codrops/demos/?tag=ascii">#ascii</a>
+        <a href="https://tympanus.net/codrops/demos/?tag=shaders">#shaders</a>
+        <a href="https://tympanus.net/codrops/demos/?tag=draggable">#draggable</a>
+        <a href="https://tympanus.net/codrops/demos/?tag=three-js">#three.js</a>
+        <a href="https://tympanus.net/codrops/demos/?tag=webgl">#webgl</a>
+      </nav>
+      <!-- Both themes rendered, the active one filled: the control reads as a state, not an action. -->
+      <div class="theme-switch" role="group" aria-label="Theme">
+        <button type="button" data-theme-choice="light" aria-pressed="true">light</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="false">dark</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- The mark is the whole page now, so it is labelled rather than hidden: `aria-hidden` here
+           would leave a screen reader with nothing at all to read. -->
+      <ascii-logo role="img" aria-label="The Codrops mark, drawn as a rotating solid in ASCII characters">
+        <!-- Served hidden and faded in once the first frame is on it. Nothing stands in for it
+             while it waits, and nothing stands in for it if the print never arrives. -->
+        <canvas data-logo-canvas class="is-hidden"></canvas>
+      </ascii-logo>
+    </main>
+
+    <!-- Vite resolves the bare `three` imports behind this entry and serves the page, so there is
+         nothing to configure here and nothing to open off disk. Run `npm run dev`. -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

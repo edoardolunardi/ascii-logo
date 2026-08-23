@@ -1,0 +1,6 @@
+dist
+node_modules
+package-lock.json
+
+# Prettier has no GLSL parser, and the shaders are formatted by hand anyway.
+*.glsl
