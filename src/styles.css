@@ -1,18 +1,19 @@
 /* The object needs three things: a square box, a mono face on the canvas (the atlas bakes from
    it), and a `color` on the element (the print is drawn in whatever ink resolves there). */
 
+/* Dark is the default ground. The blue is lifted a step from the paper value so thin glyphs hold
+   up against a near-black ground. */
 :root {
   /* The renderer reads whatever `color` resolves to on the element. */
-  --mark: #2740de;
-  --ground: #ffffff;
+  --mark: #4457ff;
+  --ground: #0a0807;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
   --page-padding: 1.5rem;
 }
 
-/* The blue is lifted a step here so thin glyphs hold up against a near-black ground. */
-:root[data-theme="dark"] {
-  --mark: #4457ff;
-  --ground: #0a0807;
+:root[data-theme="light"] {
+  --mark: #2740de;
+  --ground: #ffffff;
 }
 
 * {

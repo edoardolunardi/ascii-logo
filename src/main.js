@@ -12,9 +12,9 @@ function applyTheme(dark) {
   // Page first, element second: the element re-reads its computed ink when its own attribute
   // flips, so the cascade has to already be on the new theme by then.
   if (dark) {
-    document.documentElement.setAttribute("data-theme", "dark");
-  } else {
     document.documentElement.removeAttribute("data-theme");
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
   }
 
   for (const logo of document.querySelectorAll("ascii-logo")) {

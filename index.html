@@ -44,15 +44,15 @@
       </nav>
       <!-- Both themes rendered, the active one filled: the control reads as a state, not an action. -->
       <div class="theme-switch" role="group" aria-label="Theme">
-        <button type="button" data-theme-choice="light" aria-pressed="true">light</button>
-        <button type="button" data-theme-choice="dark" aria-pressed="false">dark</button>
+        <button type="button" data-theme-choice="dark" aria-pressed="true">dark</button>
+        <button type="button" data-theme-choice="light" aria-pressed="false">light</button>
       </div>
     </header>
 
     <main class="stage">
       <!-- The mark is the whole page now, so it is labelled rather than hidden: `aria-hidden` here
            would leave a screen reader with nothing at all to read. -->
-      <ascii-logo role="img" aria-label="The Codrops mark, drawn as a rotating solid in ASCII characters">
+      <ascii-logo dark role="img" aria-label="The Codrops mark, drawn as a rotating solid in ASCII characters">
         <!-- Served hidden and faded in once the first frame is on it. Nothing stands in for it
              while it waits, and nothing stands in for it if the print never arrives. -->
         <canvas data-logo-canvas class="is-hidden"></canvas>
