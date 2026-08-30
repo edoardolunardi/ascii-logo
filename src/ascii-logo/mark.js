@@ -20,12 +20,6 @@ const DOME_SAG = 0.8;
 const SEGMENTS = 192;
 const RADIAL = 10;
 
-// The sphere each face is cut from, placed so it passes through the rim and the middle.
-const DOME_RADIUS = (OUTER_RADIUS * OUTER_RADIUS + DOME_SAG * DOME_SAG) / (2 * DOME_SAG);
-const DOME_CENTRE = Math.sqrt(DOME_RADIUS * DOME_RADIUS - OUTER_RADIUS * OUTER_RADIUS) - RIM_DEPTH / 2;
-
-const domeZ = (r) => Math.sqrt(Math.max(DOME_RADIUS * DOME_RADIUS - r * r, 0)) - DOME_CENTRE;
-
 // Where a tangent meets the bulb. Past that angle the outline is the bulb's own arc.
 const TANGENT_COS = BULB_RADIUS / (APEX_Y - BULB_Y);
 const TANGENT_X = BULB_RADIUS * Math.sqrt(1 - TANGENT_COS * TANGENT_COS);
@@ -56,7 +50,15 @@ function dropletRadius(theta) {
   return along + Math.sqrt(Math.max(along * along - BULB_Y * BULB_Y + BULB_RADIUS * BULB_RADIUS, 0));
 }
 
-export function buildLogoGeometry() {
+/** `domeSag` is a debug-only override; the shipped path passes nothing. It cannot be 0, since
+ * the dome radius divides by it. Use 0.001 for a near-flat face. */
+export function buildLogoGeometry({ domeSag = DOME_SAG } = {}) {
+  // The sphere each face is cut from, placed so it passes through the rim and the middle.
+  const DOME_RADIUS = (OUTER_RADIUS * OUTER_RADIUS + domeSag * domeSag) / (2 * domeSag);
+  const DOME_CENTRE = Math.sqrt(DOME_RADIUS * DOME_RADIUS - OUTER_RADIUS * OUTER_RADIUS) - RIM_DEPTH / 2;
+
+  const domeZ = (r) => Math.sqrt(Math.max(DOME_RADIUS * DOME_RADIUS - r * r, 0)) - DOME_CENTRE;
+
   const quads = SEGMENTS * (2 + RADIAL * 2);
   const positions = new Float32Array(quads * 6 * 3);
   const normals = new Float32Array(quads * 6 * 3);
@@ -156,3 +158,7 @@ export function buildLogoGeometry() {
 
   return geometry;
 }
+
+// The outline math, exported for tooling and diagnostics. Nothing in the shipped path imports
+// these.
+export { APEX_Y, BULB_RADIUS, BULB_Y, dropletRadius, OUTER_RADIUS, TANGENT_FROM, TANGENT_SPAN, TANGENT_X, TANGENT_Y };

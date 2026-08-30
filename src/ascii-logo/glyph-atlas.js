@@ -2,19 +2,7 @@
 
 import { CanvasTexture, DataTexture, FloatType, LinearFilter, LinearMipmapLinearFilter, RedFormat, Vector2 } from "three";
 
-/** Six sample points per cell, as fractions, y down. Matching on layout rather than on average
- * brightness is what lands an edge on a slash instead of a block. The right column rides higher
- * than the left so a diagonal reads as a diagonal, not as two stacked dots.
- *
- * Hard-coded again as `INNER` in `shaders/cell.frag.glsl`. The two have to agree. */
-const INNER_SAMPLES = [
-  [0.28, 0.26],
-  [0.72, 0.14],
-  [0.28, 0.56],
-  [0.72, 0.44],
-  [0.28, 0.86],
-  [0.72, 0.74],
-];
+import { INNER_SAMPLES } from "./samples.js";
 
 /** Space through tilde. The winner ships in an 8-bit channel, so 255 is the ceiling. */
 const GLYPHS = Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i));

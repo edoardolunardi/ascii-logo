@@ -70,11 +70,13 @@ export class AsciiLogoRenderer {
   #sceneTarget;
   #cellTarget;
 
-  constructor(renderer, atlas) {
+  /** `debug` carries fragment shader overrides and a dome override for diagnostics. The shipped
+   * path never passes it. */
+  constructor(renderer, atlas, debug = {}) {
     this.#renderer = renderer;
 
     this.#mesh = new Mesh(
-      buildLogoGeometry(),
+      buildLogoGeometry({ domeSag: debug.domeSag }),
       new ShaderMaterial({
         glslVersion: GLSL3,
         vertexShader: SCENE_VERT,
@@ -103,7 +105,7 @@ export class AsciiLogoRenderer {
       generateMipmaps: false,
     });
 
-    this.#cellMaterial = fullFrameMaterial(CELL_FRAG, {
+    this.#cellMaterial = fullFrameMaterial(debug.cellShader ?? CELL_FRAG, {
       tScene: { value: this.#sceneTarget.texture },
       tShapes: { value: atlas.shapes },
       uResolution: { value: new Vector2(1, 1) },
@@ -111,7 +113,7 @@ export class AsciiLogoRenderer {
       uGlyphCount: { value: atlas.count },
     });
 
-    this.#postMaterial = fullFrameMaterial(POST_FRAG, {
+    this.#postMaterial = fullFrameMaterial(debug.postShader ?? POST_FRAG, {
       tCells: { value: this.#cellTarget.texture },
       tAtlas: { value: atlas.sheet },
       uCellsPerUv: { value: new Vector2(1, 1) },
@@ -128,7 +130,7 @@ export class AsciiLogoRenderer {
     this.#frame.add(this.#quad);
   }
 
-  static create(canvas, atlas) {
+  static create(canvas, atlas, debug = {}) {
     let renderer;
 
     try {
@@ -150,7 +152,21 @@ export class AsciiLogoRenderer {
       throw new Error("ascii-logo: shader failed to compile");
     };
 
-    return new AsciiLogoRenderer(renderer, atlas);
+    return new AsciiLogoRenderer(renderer, atlas, debug);
+  }
+
+  /** Debug-only readback. The scene target is multisampled, and three.js resolves it when the
+   * cell pass samples it, so read it back only after a full `render()`. */
+  get sceneTarget() {
+    return this.#sceneTarget;
+  }
+
+  get cellTarget() {
+    return this.#cellTarget;
+  }
+
+  get renderer() {
+    return this.#renderer;
   }
 
   setInk(color) {

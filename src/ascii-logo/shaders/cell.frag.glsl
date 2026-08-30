@@ -4,7 +4,7 @@
 // sits and which way an edge runs through the cell, not by an average. The winner leaves in alpha
 // as `index / 255`.
 //
-// INNER must match INNER_SAMPLES in glyph-atlas.js, or the search compares against vectors built
+// INNER must match INNER_SAMPLES in samples.js, or the search compares against vectors built
 // some other way.
 
 precision highp float;

@@ -74,6 +74,16 @@ export default [
     },
   },
 
+  // Node-side scripts, which exist only in local checkouts.
+  {
+    files: ["**/scripts/**/*.mjs"],
+    languageOptions: {
+      ecmaVersion: 2024,
+      sourceType: "module",
+      globals: globals.node,
+    },
+  },
+
   // Last, so nothing here fights the formatter.
   prettier,
 ];
