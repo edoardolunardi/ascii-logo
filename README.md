@@ -2,9 +2,7 @@
 
 _The Codrops mark as a draggable 3D solid, printed in ASCII characters on the GPU._
 
-<!-- TODO: replace with the Codrops featured image once it exists -->
-
-![ASCII Logo](TODO-featured-image.jpg)
+![Image Title](https://tympanus.net/codrops/wp-content/uploads/2026/09/split-article-cover-scaled.png)
 
 [Article on Codrops](https://tympanus.net/codrops/?p=TODO)
 
